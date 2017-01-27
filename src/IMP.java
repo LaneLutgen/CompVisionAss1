@@ -203,6 +203,8 @@ public class IMP implements MouseListener{
    */
   private void reset()
   {
+	  resetPicture();
+	  
 	  width = startWidth;
 	  height = startHeight;
 	  
@@ -314,21 +316,13 @@ public class IMP implements MouseListener{
    */
   private void rotateNinetyClockwise()
   {
-	  
-  }
-  
-  /*
-   * Rotates the image 90 degrees counter-clockwise
-   */
-  private void rotateNinetyCounterClockWise()
-  {
 	  int[][] newPicture = new int[width][height];
 	  
-	  for(int i = 0; i<width; i++)
+	  for(int i = 0; i<height; i++)
 	  {
-		  for(int j = 0; j<height; j++)
+		  for(int j = 0; j<width; j++)
 		  {
-			  newPicture[i][j] = picture[j][i];
+			  newPicture[j][height - i - 1] = picture[i][j];
 		  }
 	  }
 	  
@@ -347,6 +341,14 @@ public class IMP implements MouseListener{
 	  height = temp;
 	  
 	  resetPicture();
+  }
+  
+  /*
+   * Rotates the image 90 degrees counter-clockwise
+   */
+  private void rotateNinetyCounterClockWise()
+  {
+	  
   }
   
   /*
