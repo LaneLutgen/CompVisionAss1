@@ -26,6 +26,8 @@ public class IMP implements MouseListener{
    
    //This will be your height and width of your 2d array
    int height=0, width=0;
+   int startHeight = 0;
+   int startWidth = 0;
    
    //your 2D array of pixels
     int picture[][];
@@ -153,8 +155,8 @@ public class IMP implements MouseListener{
        pic = chooser.getSelectedFile();
        img = new ImageIcon(pic.getPath());
       }
-     width = img.getIconWidth();
-     height = img.getIconHeight(); 
+     startWidth = width = img.getIconWidth();
+     startHeight = height = img.getIconHeight(); 
      
      JLabel label = new JLabel(img);
      label.addMouseListener(this);
@@ -177,6 +179,7 @@ public class IMP implements MouseListener{
         results[i] = pixels[i];  
      turnTwoDimensional();
      mp.removeAll();
+     
      mp.add(label);
      
      mp.revalidate();
@@ -200,12 +203,16 @@ public class IMP implements MouseListener{
    */
   private void reset()
   {
+	  width = startWidth;
+	  height = startHeight;
+	  
         for(int i = 0; i<width*height; i++)
              pixels[i] = results[i]; 
        Image img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width)); 
 
       JLabel label2 = new JLabel(new ImageIcon(img2));    
        mp.removeAll();
+       mp.repaint();
        mp.add(label2);
      
        mp.revalidate(); 
@@ -222,6 +229,7 @@ public class IMP implements MouseListener{
 
       JLabel label2 = new JLabel(new ImageIcon(img2));    
        mp.removeAll();
+       mp.repaint();
        mp.add(label2);
      
        mp.revalidate(); 
@@ -303,9 +311,16 @@ public class IMP implements MouseListener{
   
   /*
    * Rotates the image 90 degrees clockwise
-   * NEEDS CLEANUP
    */
   private void rotateNinetyClockwise()
+  {
+	  
+  }
+  
+  /*
+   * Rotates the image 90 degrees counter-clockwise
+   */
+  private void rotateNinetyCounterClockWise()
   {
 	  int[][] newPicture = new int[width][height];
 	  
@@ -332,14 +347,6 @@ public class IMP implements MouseListener{
 	  height = temp;
 	  
 	  resetPicture();
-  }
-  
-  /*
-   * Rotates the image 90 degrees counter-clockwise
-   */
-  private void rotateNinetyCounterClockWise()
-  {
-	  
   }
   
   /*
