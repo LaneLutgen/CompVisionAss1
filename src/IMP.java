@@ -348,7 +348,31 @@ public class IMP implements MouseListener{
    */
   private void rotateNinetyCounterClockWise()
   {
+	  int[][] newPicture = new int[width][height];
 	  
+	  for(int i = 0; i<height; i++)
+	  {
+		  for(int j = 0; j<width; j++)
+		  {
+			  newPicture[width - j - 1][i] = picture[i][j];
+		  }
+	  }
+	  
+	  picture = new int[width][height];
+	  
+	  for(int i = 0; i<width; i++)
+	  {
+		  for(int j = 0; j<height; j++)
+		  {
+			  picture[i][j] = newPicture[i][j];
+		  }
+	  }
+	  
+	  int temp = width;
+	  width = height;
+	  height = temp;
+	  
+	  resetPicture();
   }
   
   /*
