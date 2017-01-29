@@ -308,7 +308,7 @@ public class IMP implements MouseListener{
    */ 
   private void fun2()
   {
-	  
+	  HistogramCollection histogram = new HistogramCollection();
   }
   
   /*
