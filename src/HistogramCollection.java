@@ -37,4 +37,12 @@ public class HistogramCollection
 		blueFrame.setVisible(true);
 	}
 	
+	public HistogramCollection(int[] red, int[] green, int[] blue)
+	{
+		this();
+		redPanel.setColor(red);
+		greenPanel.setColor(green);
+		bluePanel.setColor(blue);
+	}
+	
 }

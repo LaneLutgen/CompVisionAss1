@@ -308,7 +308,28 @@ public class IMP implements MouseListener{
    */ 
   private void fun2()
   {
-	  HistogramCollection histogram = new HistogramCollection();
+	  //Arrays to store occurances for color values
+	  int[] red = new int[256];
+	  int[] green = new int[256];
+	  int[] blue = new int[256];
+	  
+	  //Parse picture and populate arrays
+	  for(int i=0; i<height; i++)
+	  {
+	       for(int j=0; j<width; j++)
+	       {
+	    	   int rgbArray[] = new int[4];
+	    	   
+	    	   rgbArray = getPixelArray(picture[i][j]);
+	    	   
+	    	   //Increment the occurances for the color values
+	    	   red[rgbArray[1]]++;
+	    	   green[rgbArray[2]]++;
+	    	   blue[rgbArray[3]]++;
+	       }
+	  }
+	  
+	  HistogramCollection histogram = new HistogramCollection(red, green, blue);
   }
   
   /*
