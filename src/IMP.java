@@ -401,7 +401,27 @@ public class IMP implements MouseListener{
    */
   private void grayscale()
   {
-	  
+	  //Luminosity formula 0.21R + 0.72G + 0.07B
+	  for(int i=0; i<height; i++)
+	       for(int j=0; j<width; j++)
+	       {   
+	          int rgbArray[] = new int[4];
+	         
+	          //get three ints for R, G and B
+	          rgbArray = getPixelArray(picture[i][j]);
+	         
+	        
+	           int red = (int)(0.21 * rgbArray[1]);
+	           int green = (int)(0.72 * rgbArray[2]);
+	           int blue = (int)(0.07 * rgbArray[3]);
+	           
+	           int grayscale = red + green + blue;
+	           rgbArray[1] = rgbArray[2] = rgbArray[3] = grayscale;
+	           
+	           //take three ints for R, G, B and put them back into a single int
+	           picture[i][j] = getPixels(rgbArray);
+	        } 
+	  resetPicture();
   }
   
   /*
