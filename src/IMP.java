@@ -498,7 +498,62 @@ public class IMP implements MouseListener{
    */
   private void edgeDetection()
   {
+	  grayscale();
 	  
+	  for(int i=0; i<height; i++)
+	  {
+	       for(int j=0; j<width; j++)
+	       {
+	    	   try
+	    	   {
+	    		   picture[i][j] *= 8;
+	    	   }
+	    	   catch(IndexOutOfBoundsException e){}
+	    	   try
+	    	   {
+	    		   picture[i+1][j] *= -1;
+	    	   }
+	    	   catch(IndexOutOfBoundsException e){}
+	    	   try
+	    	   {
+	    		   picture[i-1][j] *= -1;
+	    	   }
+	    	   catch(IndexOutOfBoundsException e){}
+	    	   try
+	    	   {
+	    		   picture[i+1][j+1] *= -1;
+	    	   }
+	    	   catch(IndexOutOfBoundsException e){}
+	    	   try
+	    	   {
+	    		   picture[i-1][j-1] *= -1;
+	    	   }
+	    	   catch(IndexOutOfBoundsException e){}
+	    	   try
+	    	   {
+	    		   picture[i][j+1] *= -1;
+	    	   }
+	    	   catch(IndexOutOfBoundsException e){}
+	    	   try
+	    	   {
+	    		   picture[i][j-1] *= -1;
+	    	   }
+	    	   catch(IndexOutOfBoundsException e){}
+	    	   try
+	    	   {
+	    		   picture[i+1][j-1] *= -1;
+	    	   }
+	    	   catch(IndexOutOfBoundsException e){}
+	    	   try
+	    	   {
+	    		   picture[i-1][j+1] *= -1;
+	    	   }
+	    	   catch(IndexOutOfBoundsException e){}
+	    	   
+	       }
+	  }
+	  
+	  resetPicture();
   }
   
   /*
