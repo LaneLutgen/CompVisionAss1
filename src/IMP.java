@@ -100,7 +100,7 @@ public class IMP implements MouseListener{
      JMenuItem thirdItem = new JMenuItem("Rotate 90 Degrees Counter-clockwise");
      JMenuItem fourthItem = new JMenuItem("Grayscale Image");
      JMenuItem fifthItem = new JMenuItem("Edge Detection");
-     JMenuItem sixthItem = new JMenuItem("Track Color");
+     JMenuItem sixthItem = new JMenuItem("Track Orange");
      JMenuItem seventhItem = new JMenuItem("Normalize Image");
     
      firstItem.addActionListener(new ActionListener(){
@@ -130,7 +130,7 @@ public class IMP implements MouseListener{
      
      sixthItem.addActionListener(new ActionListener(){
     	 @Override
-    	 public void actionPerformed(ActionEvent evt){trackColor();}
+    	 public void actionPerformed(ActionEvent evt){trackOrange();}
      });
      
      seventhItem.addActionListener(new ActionListener(){
@@ -273,7 +273,13 @@ public class IMP implements MouseListener{
       int pix = picture[colorY][colorX];
       int temp[] = getPixelArray(pix);
       System.out.println("Color value " + temp[0] + " " + temp[1] + " "+ temp[2] + " " + temp[3]);
-    }
+  }
+  
+  public int[] getRBGFromClick()
+  {
+	  int pix = picture[colorY][colorX];
+      return getPixelArray(pix);
+  }
   
   /**************************************************************************************************
    * This is where you will put your methods. Every method below is called when the corresponding pulldown menu is 
@@ -498,9 +504,10 @@ public class IMP implements MouseListener{
   /*
    * Tracks a color in an image (can maybe supply a color as input)
    */
-  private void trackColor()
+  private void trackOrange()
   {
-	  
+	  //Get the x and y coords of the mouse click
+	  int rgbArray = getRBGFromClick();
   }
   
   
