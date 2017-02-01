@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.awt.image.PixelGrabber;
 import java.awt.image.MemoryImageSource;
+import java.math.*;
 
 public class IMP implements MouseListener{
    JFrame frame;
@@ -100,6 +101,7 @@ public class IMP implements MouseListener{
      JMenuItem fourthItem = new JMenuItem("Grayscale Image");
      JMenuItem fifthItem = new JMenuItem("Edge Detection");
      JMenuItem sixthItem = new JMenuItem("Track Color");
+     JMenuItem seventhItem = new JMenuItem("Normalize Image");
     
      firstItem.addActionListener(new ActionListener(){
             @Override
@@ -130,6 +132,11 @@ public class IMP implements MouseListener{
     	 @Override
     	 public void actionPerformed(ActionEvent evt){trackColor();}
      });
+     
+     seventhItem.addActionListener(new ActionListener(){
+    	 @Override
+    	 public void actionPerformed(ActionEvent evt){normalizeImage();}
+     });
  
      fun.add(firstItem);
      fun.add(secondItem);
@@ -137,6 +144,7 @@ public class IMP implements MouseListener{
      fun.add(fourthItem);
      fun.add(fifthItem);
      fun.add(sixthItem);
+     fun.add(seventhItem);
       
      return fun;   
 
@@ -421,6 +429,61 @@ public class IMP implements MouseListener{
 	           //take three ints for R, G, B and put them back into a single int
 	           picture[i][j] = getPixels(rgbArray);
 	        } 
+	  resetPicture();
+  }
+  
+  /*
+   * Normalize the image colors based on the mapping function
+   */
+  private void normalizeImage()
+  {
+	//Arrays to store occurances for color values
+	  int[] red = new int[256];
+	  int[] green = new int[256];
+	  int[] blue = new int[256];
+	  
+	  //Parse picture and populate arrays
+	  for(int i=0; i<height; i++)
+	  {
+	       for(int j=0; j<width; j++)
+	       {
+	    	   int rgbArray[] = new int[4];
+	    	   
+	    	   rgbArray = getPixelArray(picture[i][j]);
+	    	   
+	    	   //Increment the occurances for the color values
+	    	   red[rgbArray[1]]++;
+	    	   green[rgbArray[2]]++;
+	    	   blue[rgbArray[3]]++;
+	       }
+	  }
+	  
+	  int runningRedTotal = 0;
+	  int runningGreenTotal = 0;
+	  int runningBlueTotal = 0;
+	  
+	  //Normalization loop
+	  for(int i=0; i<height; i++)
+	  {
+	       for(int j=0; j<width; j++)
+	       {
+	    	   int rgbArray[] = new int[4];
+	    	   
+	    	   rgbArray = getPixelArray(picture[i][j]);
+	    	   
+	    	   //Increment the occurances for the color values
+	    	   runningRedTotal += rgbArray[1];
+	    	   runningGreenTotal += rgbArray[2];
+	    	   runningBlueTotal += rgbArray[3];
+	    	   
+	    	   rgbArray[1] = (int)Math.round((((float)runningRedTotal)/(float)pixels.length) * 255.0f);
+	    	   rgbArray[2] = (int)Math.round((((float)runningGreenTotal)/(float)pixels.length) * 255.0f);
+	    	   rgbArray[3] = (int)Math.round((((float)runningBlueTotal)/(float)pixels.length) * 255.0f);
+	    	   
+	    	   picture[i][j] = getPixels(rgbArray);
+	       }
+	  }
+	  
 	  resetPicture();
   }
   
