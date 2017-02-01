@@ -507,7 +507,30 @@ public class IMP implements MouseListener{
   private void trackOrange()
   {
 	  //Get the x and y coords of the mouse click
-	  int rgbArray = getRBGFromClick();
+	  int redThresh = 255;
+	  int greenThresh = 180;
+	  int blueThresh = 0;
+	  
+	  for(int i=0; i<height; i++)
+	  {
+	       for(int j=0; j<width; j++)
+	       {
+	    	   int rgbArray[] = new int[4];
+	    	   
+	    	   rgbArray = getPixelArray(picture[i][j]);
+	    	   
+	    	   if((redThresh - rgbArray[1]) <= 80 && (greenThresh - rgbArray[2]) <= 70  && (greenThresh - rgbArray[2]) > 0 && rgbArray[3] <= 70)
+	    	   {
+	    		   picture[i][j] = Integer.MAX_VALUE; 
+	    	   }
+	    	   else
+	    	   {
+	    		   picture[i][j] = 0; 
+	    	   }
+	       }
+	  }
+	  
+	  resetPicture();
   }
   
   
