@@ -469,6 +469,18 @@ public class IMP implements MouseListener{
 	  int runningBlueTotal = 0;
 	  
 	  //Normalization loop
+	  for(int i=0; i<red.length; i++)
+	  {  
+    	   //Increment the occurances for the color values
+    	   runningRedTotal += red[i];
+    	   runningGreenTotal += green[i];
+    	   runningBlueTotal += blue[i];
+    	   
+    	   red[i] = (int)Math.round((((float)runningRedTotal)/(float)pixels.length) * 255.0f);
+    	   green[i] = (int)Math.round((((float)runningGreenTotal)/(float)pixels.length) * 255.0f);
+    	   blue[i] = (int)Math.round((((float)runningBlueTotal)/(float)pixels.length) * 255.0f);
+	  }
+	  
 	  for(int i=0; i<height; i++)
 	  {
 	       for(int j=0; j<width; j++)
@@ -478,13 +490,9 @@ public class IMP implements MouseListener{
 	    	   rgbArray = getPixelArray(picture[i][j]);
 	    	   
 	    	   //Increment the occurances for the color values
-	    	   runningRedTotal += rgbArray[1];
-	    	   runningGreenTotal += rgbArray[2];
-	    	   runningBlueTotal += rgbArray[3];
-	    	   
-	    	   rgbArray[1] = (int)Math.round((((float)runningRedTotal)/(float)pixels.length) * 255.0f);
-	    	   rgbArray[2] = (int)Math.round((((float)runningGreenTotal)/(float)pixels.length) * 255.0f);
-	    	   rgbArray[3] = (int)Math.round((((float)runningBlueTotal)/(float)pixels.length) * 255.0f);
+	    	   rgbArray[1] = red[rgbArray[1]];
+	    	   rgbArray[2] = green[rgbArray[2]];
+	    	   rgbArray[3] = blue[rgbArray[3]];
 	    	   
 	    	   picture[i][j] = getPixels(rgbArray);
 	       }
