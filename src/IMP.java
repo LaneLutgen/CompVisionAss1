@@ -210,9 +210,7 @@ public class IMP implements MouseListener{
    *  This method takes the picture back to the original picture
    */
   private void reset()
-  {
-	  resetPicture();
-	  
+  {	  
 	  width = startWidth;
 	  height = startHeight;
 	  
@@ -220,7 +218,11 @@ public class IMP implements MouseListener{
              pixels[i] = results[i]; 
        Image img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width)); 
 
-      JLabel label2 = new JLabel(new ImageIcon(img2));    
+      JLabel label2 = new JLabel(new ImageIcon(img2)); 
+      
+      turnTwoDimensional();
+	  resetPicture();
+	  
        mp.removeAll();
        mp.repaint();
        mp.add(label2);
