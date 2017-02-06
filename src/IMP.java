@@ -510,58 +510,87 @@ public class IMP implements MouseListener{
   {
 	  grayscale();
 	  
+	  int[][] newPicture = new int[height][width];
+	  int rgbArray[] = new int[4];
+	  int edgeTotal = 0;
+	  int value;
+	  
 	  for(int i=0; i<height; i++)
 	  {
 	       for(int j=0; j<width; j++)
 	       {
 	    	   try
 	    	   {
-	    		   picture[i][j] *= 8;
+	    		   rgbArray = getPixelArray(picture[i+1][j]);
+	    		   edgeTotal += rgbArray[1];
 	    	   }
 	    	   catch(IndexOutOfBoundsException e){}
 	    	   try
 	    	   {
-	    		   picture[i+1][j] *= -1;
+	    		   rgbArray = getPixelArray(picture[i-1][j]);
+	    		   edgeTotal += rgbArray[1];
 	    	   }
 	    	   catch(IndexOutOfBoundsException e){}
 	    	   try
 	    	   {
-	    		   picture[i-1][j] *= -1;
+	    		   rgbArray = getPixelArray(picture[i+1][j+1]);
+	    		   edgeTotal += rgbArray[1];
 	    	   }
 	    	   catch(IndexOutOfBoundsException e){}
 	    	   try
 	    	   {
-	    		   picture[i+1][j+1] *= -1;
+	    		   rgbArray = getPixelArray(picture[i-1][j-1]);
+	    		   edgeTotal += rgbArray[1];
 	    	   }
 	    	   catch(IndexOutOfBoundsException e){}
 	    	   try
 	    	   {
-	    		   picture[i-1][j-1] *= -1;
+	    		   rgbArray = getPixelArray(picture[i][j+1]);
+	    		   edgeTotal += rgbArray[1];
 	    	   }
 	    	   catch(IndexOutOfBoundsException e){}
 	    	   try
 	    	   {
-	    		   picture[i][j+1] *= -1;
+	    		   rgbArray = getPixelArray(picture[i][j-1]);
+	    		   edgeTotal += rgbArray[1];
 	    	   }
 	    	   catch(IndexOutOfBoundsException e){}
 	    	   try
 	    	   {
-	    		   picture[i][j-1] *= -1;
+	    		   rgbArray = getPixelArray(picture[i+1][j-1]);
+	    		   edgeTotal += rgbArray[1];
 	    	   }
 	    	   catch(IndexOutOfBoundsException e){}
 	    	   try
 	    	   {
-	    		   picture[i+1][j-1] *= -1;
-	    	   }
-	    	   catch(IndexOutOfBoundsException e){}
-	    	   try
-	    	   {
-	    		   picture[i-1][j+1] *= -1;
+	    		   rgbArray = getPixelArray(picture[i-1][j+1]);
+	    		   edgeTotal += rgbArray[1];
 	    	   }
 	    	   catch(IndexOutOfBoundsException e){}
 	    	   
+	    	   rgbArray = getPixelArray(picture[i][j]);
+	    	   value = edgeTotal - (8 * rgbArray[1]);
+
+	    	   if(value > 255)
+	    	   {
+	    		   rgbArray[1] = rgbArray[2] = rgbArray[3] = 255;
+	    	   }
+	    	   else if(value < 0)
+	    	   {
+	    		   rgbArray[1] = rgbArray[2] = rgbArray[3] = 0;
+	    	   }
+	    	   else
+	    	   {
+	    		   rgbArray[1] = rgbArray[2] = rgbArray[3] = value;
+	    	   }
+	    	   
+	    	   newPicture[i][j] = getPixels(rgbArray); 
+	    	   
+	    	   edgeTotal = 0;
 	       }
 	  }
+	  
+	  picture = newPicture;
 	  
 	  resetPicture();
   }
