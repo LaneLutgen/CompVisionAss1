@@ -100,7 +100,7 @@ public class IMP implements MouseListener{
      JMenuItem thirdItem = new JMenuItem("Rotate 90 Degrees Counter-clockwise");
      JMenuItem fourthItem = new JMenuItem("Grayscale Image");
      JMenuItem fifthItem = new JMenuItem("Edge Detection");
-     JMenuItem sixthItem = new JMenuItem("Track Orange");
+     JMenuItem sixthItem = new JMenuItem("Track Color (Click on image first)");
      JMenuItem seventhItem = new JMenuItem("Normalize Image");
     
      firstItem.addActionListener(new ActionListener(){
@@ -130,7 +130,7 @@ public class IMP implements MouseListener{
      
      sixthItem.addActionListener(new ActionListener(){
     	 @Override
-    	 public void actionPerformed(ActionEvent evt){trackOrange();}
+    	 public void actionPerformed(ActionEvent evt){trackColor();}
      });
      
      seventhItem.addActionListener(new ActionListener(){
@@ -218,7 +218,8 @@ public class IMP implements MouseListener{
              pixels[i] = results[i]; 
        Image img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width)); 
 
-      JLabel label2 = new JLabel(new ImageIcon(img2)); 
+      JLabel label2 = new JLabel(new ImageIcon(img2));
+      label2.addMouseListener(this);
       
       turnTwoDimensional();
 	  resetPicture();
@@ -239,7 +240,8 @@ public class IMP implements MouseListener{
           pixels[i*width+j] = picture[i][j];
       Image img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width)); 
 
-      JLabel label2 = new JLabel(new ImageIcon(img2));    
+      JLabel label2 = new JLabel(new ImageIcon(img2));
+      label2.addMouseListener(this);
        mp.removeAll();
        mp.repaint();
        mp.add(label2);
@@ -598,30 +600,33 @@ public class IMP implements MouseListener{
   /*
    * Tracks a color in an image (can maybe supply a color as input)
    */
-  private void trackOrange()
+  private void trackColor()
   {
 	  //Get the x and y coords of the mouse click
-	  int redThresh = 255;
-	  int greenThresh = 180;
-	  int blueThresh = 0;
-	  
-	  for(int i=0; i<height; i++)
+	  if(colorX > 0 && colorY > 0)
 	  {
-	       for(int j=0; j<width; j++)
-	       {
-	    	   int rgbArray[] = new int[4];
-	    	   
-	    	   rgbArray = getPixelArray(picture[i][j]);
-	    	   
-	    	   if((redThresh - rgbArray[1]) <= 80 && (greenThresh - rgbArray[2]) <= 70  && (greenThresh - rgbArray[2]) > 0 && rgbArray[3] <= 70)
-	    	   {
-	    		   picture[i][j] = Integer.MAX_VALUE; 
-	    	   }
-	    	   else
-	    	   {
-	    		   picture[i][j] = 0; 
-	    	   }
-	       }
+		  int[] temp = getRBGFromClick();
+		  
+		  for(int i=0; i<height; i++)
+		  {
+		       for(int j=0; j<width; j++)
+		       {
+		    	   int rgbArray[] = new int[4];
+		    	   
+		    	   rgbArray = getPixelArray(picture[i][j]);
+		    	   
+		    	   if(Math.abs(temp[1] - rgbArray[1]) < 20 &&
+	    			  Math.abs(temp[2] - rgbArray[2]) < 20 &&
+	    			  Math.abs(temp[3] - rgbArray[3]) < 20)
+		    	   {
+		    		   picture[i][j] = Integer.MAX_VALUE; 
+		    	   }
+		    	   else
+		    	   {
+		    		   picture[i][j] = 0; 
+		    	   }
+		       }
+		  }
 	  }
 	  
 	  resetPicture();
